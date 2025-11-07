@@ -45,6 +45,35 @@ def plot_data(x, y, ax=None):
     ax.scatter(x[pos, 0], x[pos, 1], marker='x', s=80, label="y=1", c='red')
     ax.legend()
 
+def compute_cost_logistic(X, y, w, b):
+    """
+        Computes cost
+
+    Args:
+      X (ndarray (m,n)): Data, m examples with n features
+      y (ndarray (m,)) : target values
+      w (ndarray (n,)) : model parameters  
+      b (scalar)       : model parameter
+      
+    Returns:
+      cost (scalar): cost
+
+    """
+    m = X.shape[0]
+    cost = 0.0
+    for i in range(m):
+        z_i = np.dot(X[i],w) + b
+        f_wb_i = sigmoid(z_i)
+        cost += -y[i]*np.log(f_wb_i) - (i - y[i])*np.log(1-f_wb_i)
+    cost = cost/m
+    return cost
+    
+w_tmp = np.array([1,1])
+b_tmp = -3
+print(compute_cost_logistic(x_train, y_train, w_tmp, b_tmp))
+
+
+
 
 #Generate an array of evenly spaced value from -10 to 10
 z_tmp = np.arange(-10,11)
@@ -67,6 +96,31 @@ ax.set_ylabel('$x_1$')
 ax.set_xlabel('$x_0$')
 plt.show()
 
+
+
+
+
+#Choose values between 0 and 6
+x0 = np.arange(0,6)
+
+x1 = 3 - x0 # since z = 0 = -3 + x1 + x2
+x1_other = 4 - x0 # just for example, not real outcome
+
+fig,ax = plt.subplots(1, 1, figsize=(4,4))
+# Plot the decision boundary
+ax.plot(x0,x1, c="blue", label="$b$=-3")
+ax.plot(x0,x1_other, c="magenta", label="$b$=-4")
+ax.axis([0, 4, 0, 4])
+
+# Plot the original data
+plot_data(x_train,y_train,ax)
+ax.axis([0, 4, 0, 4])
+ax.set_ylabel('$x_1$', fontsize=12)
+ax.set_xlabel('$x_0$', fontsize=12)
+plt.legend(loc="upper right")
+plt.title("Decision Boundary")
+plt.show()
+
 #Plot z vs sigmoid(z)
 
 fig,ax = plt.subplots(1,1, figsize = (5,3))
@@ -82,10 +136,6 @@ plt.show()
 
 
 
-#Choose values between 0 and 6
-x0 = np.arange(0,6)
-
-x1 = 3 - x0 # since z = 0 = -3 + x1 + x2
 fig,ax = plt.subplots(1,1, figsize = (5,4))
 
 #Plot the decision boundary
