@@ -94,3 +94,37 @@ def gradient_descent(x, y, w_in, b_in, alpha, num_iters, cost_function, gradient
                    f"w:{w: 0.3e}, b:{b: 0.5e}" )#Print the parameters
 
     return w, b, J_history, p_history # return w and b and J history for graphing
+
+#Initialize Parameters
+w_init = 0
+b_init = 0
+
+#Gradient descent settings
+iterations = 10000
+temp_aplha = 1.0e-2
+
+#Run gradient descent
+w_final, b_final, J_hist, p_hist = (gradient_descent(x_train, y_train, w_init, b_init, temp_aplha, iterations, compute_cost, compute_gradient))
+
+print(f"(w,b) found by gradient descent: ({w_final:8.4f},{b_final:8.4f})")
+
+print(f"1000 sqft house prediction {w_final*1.0 + b_final:0.1f} Thousand dollars")
+print(f"1200 sqft house prediction {w_final*1.2 + b_final:0.1f} Thousand dollars")
+print(f"2000 sqft house prediction {w_final*2.0 + b_final:0.1f} Thousand dollars")
+
+
+
+
+#Plot 1 - Cost function vs W (b fixed at 100)
+w_values = np.linspace(-200, 600, 200) # Range of w values 
+b = 100 # Fixed b value
+cost_values = [compute_cost(x_train, y_train, w, b) for w in w_values] # Compute cost for each w, for w in w_values is equivalent to a for loop
+
+plt.figure(figsize = (12,5)) # Set the figure size in inches
+plt.subplot(1, 2, 1) # Create a subplot (1 row, 2 columns, 1st plot)
+plt.plot(w_values, cost_values, 'b-', linewidth = 2) # Plot cost vs w, b- indicates blue line
+plt.title("Cost vs w")
+plt.xlabel("w")
+plt.ylabel("Cost")
+
+plt.show()
