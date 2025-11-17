@@ -1,5 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import copy, math
+
 
 
 x_train = np.array([[0.5, 1.5], [1,1], [1.5, 0.5], [3, 0.5], [2, 2], [1, 2.5]])
@@ -41,8 +43,8 @@ def plot_data(x, y, ax=None):
         ax = plt.gca()#Get current axis    
     pos = y.flatten() == 1#Positive examples
     neg = y.flatten() == 0# Negative examples
-    ax.scatter(x[neg, 0], x[neg, 1], marker='o', s=80, label="y=0", facecolors='none', edgecolors='blue')
-    ax.scatter(x[pos, 0], x[pos, 1], marker='x', s=80, label="y=1", c='red')
+    ax.scatter(x[neg, 0], x[neg, 1], marker='o', s=80, label="y=0", facecolors='none', edgecolors='blue') #positive examples
+    ax.scatter(x[pos, 0], x[pos, 1], marker='x', s=80, label="y=1", c='red') #negative examples
     ax.legend()
 
 def compute_cost_logistic(X, y, w, b):
