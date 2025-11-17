@@ -6,6 +6,10 @@ import copy, math
 
 x_train = np.array([[0.5, 1.5], [1,1], [1.5, 0.5], [3, 0.5], [2, 2], [1, 2.5]])
 y_train = np.array([0, 0, 0, 1, 1, 1]).reshape(-1,1) 
+
+w_tmp = np.array([2,3])
+b_tmp = -1
+
 #Input array
 input_array = np.array([1,2,3])
 exp_array = np.exp(input_array) # Exponential of each element
@@ -73,8 +77,7 @@ def compute_cost_logistic(X, y, w, b):
     cost = cost/m
     return cost
     
-w_tmp = np.array([1,1])
-b_tmp = -3
+
 print(compute_cost_logistic(x_train, y_train, w_tmp, b_tmp))
 
 
@@ -108,6 +111,10 @@ def compute_gradient_logistic(X, y, w, b):
     dj_dw = dj_dw/m
 
     return dj_dw, dj_db
+
+dj_dw_tmp, dj_db_tmp = compute_gradient_logistic(x_train, y_train, w_tmp, b_tmp)
+print(f"dj_db: {dj_db_tmp}" )
+print(f"dj_dw: {dj_dw_tmp.tolist()}" )
 
 
 
