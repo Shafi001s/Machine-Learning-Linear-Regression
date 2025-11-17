@@ -21,7 +21,7 @@ exp_val = np.exp(input_val)
 print("Input to exp: ", input_val)
 print("Output of exp: ", exp_val)
 
-
+##SIGMOID Function
 def sigmoid(z):
     """
     Compute the sigmoid of z
@@ -38,6 +38,7 @@ def sigmoid(z):
 
     return g
 
+## Graph for the data plot
 def plot_data(x, y, ax=None):
     if ax is None:
         ax = plt.gca()#Get current axis    
@@ -47,6 +48,8 @@ def plot_data(x, y, ax=None):
     ax.scatter(x[pos, 0], x[pos, 1], marker='x', s=80, label="y=1", c='red') #negative examples
     ax.legend()
 
+
+##Compute cost/loss 
 def compute_cost_logistic(X, y, w, b):
     """
         Computes cost
@@ -74,6 +77,37 @@ w_tmp = np.array([1,1])
 b_tmp = -3
 print(compute_cost_logistic(x_train, y_train, w_tmp, b_tmp))
 
+
+##Compute Gradient of logistic function
+def compute_gradient_logistic(X, y, w, b):
+    """
+    Computes the gradient for logistic regression 
+ 
+    Args:
+      X (ndarray (m,n): Data, m examples with n features
+      y (ndarray (m,)): target values
+      w (ndarray (n,)): model parameters  
+      b (scalar)      : model parameter
+    Returns
+      dj_dw (ndarray (n,)): The gradient of the cost w.r.t. the parameters w. 
+      dj_db (scalar)      : The gradient of the cost w.r.t. the parameter b. 
+
+    """
+    m,n = X.shape
+    dj_dw = np.zeros((n,))
+    dj_db = 0.
+
+    for i in range(m):
+        f_wb_i = sigmoid(np.dot(X[i],w) + b)
+        err_i = f_wb_i - y[i]
+
+        for j in range(n):
+            dj_dw[j] = dj_dw[j] = err_i * X[i,j]
+        dj_db = dj_db + err_i
+    dj_db = dj_db/m
+    dj_dw = dj_dw/m
+
+    return dj_dw, dj_db
 
 
 
