@@ -74,8 +74,9 @@ def compute_cost_logistic(X, y, w, b):
     for i in range(m):
         z_i = np.dot(X[i],w) + b
         f_wb_i = sigmoid(z_i)
-        cost += -y[i]*np.log(f_wb_i) - (i - y[i])*np.log(1-f_wb_i)
-    cost = cost/m
+        cost +=  -y[i]*np.log(f_wb_i) - (1-y[i])*np.log(1-f_wb_i)
+             
+    cost = cost / m
     return cost
     
 
@@ -102,14 +103,13 @@ def compute_gradient_logistic(X, y, w, b):
     dj_db = 0.
 
     for i in range(m):
-        f_wb_i = sigmoid(np.dot(X[i],w) + b)
-        err_i = f_wb_i - y[i]
-
+        f_wb_i = sigmoid(np.dot(X[i],w) + b)          #(n,)(n,)=scalar
+        err_i  = f_wb_i  - y[i]                       #scalar
         for j in range(n):
-            dj_dw[j] = dj_dw[j] = err_i * X[i,j]
+            dj_dw[j] = dj_dw[j] + err_i * X[i,j]      #scalar
         dj_db = dj_db + err_i
-    dj_db = dj_db/m
-    dj_dw = dj_dw/m
+    dj_dw = dj_dw/m                                   #(n,)
+    dj_db = dj_db/m                                   #scalar
 
     return dj_dw, dj_db
 
